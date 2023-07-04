@@ -77,7 +77,12 @@ def create_anki_cards(pdf_text,):
     with open(f'{ROOT_DIRECTORY}/output/flashcards.txt', "w") as f:
         f.write(generated_flashcards)
 
+def download_pdf(url):
+    r = requests.get(url, stream=True)
 
+    with open('/SOURCE_DOCUMENTS/document.pdf', 'w') as fd:
+        for chunk in r.iter_content(2000):
+            fd.write(chunk)
 
 
 

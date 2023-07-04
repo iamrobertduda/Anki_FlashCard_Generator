@@ -1,7 +1,7 @@
 import json
 import requests
 from http.server import BaseHTTPRequestHandler
-from Anki_flashcards_creator import read_pdf, create_anki_cards
+from Anki_flashcards_creator import read_pdf, create_anki_cards, download_pdf, ROOT_DIRECTORY
 
 
 class handler(BaseHTTPRequestHandler):
@@ -17,9 +17,9 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
 
-        r = requests.get(url, stream=True)
+        download_pdf(url)
 
-        pdf_text = read_pdf(r.content)
+        pdf_text = read_pdf(f'{ROOT_DIRECTORY}/SOURCE_DOCUMENTS/document.pdf')
         create_anki_cards(pdf_text)
 
         self.send_response(200)
