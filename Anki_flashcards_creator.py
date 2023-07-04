@@ -7,19 +7,19 @@ import requests
 # Initialize OpenAI API with your key
 
 
-openai.api_key = 'YOUR-API-KEY'
+openai.api_key = 'default'
 
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
+def set_apikey():
+    url = "https://edge-config.vercel.com/ecfg_qb7ymmxm41illxzlso3texjkhtkm/item/openai_api"  # Ersetze "example.com" durch die gewünschte Adresse
 
-url = "https://edge-config.vercel.com/ecfg_qb7ymmxm41illxzlso3texjkhtkm/item/openai_api"  # Ersetze "example.com" durch die gewünschte Adresse
+    response = requests.get(url)
 
-response = requests.get(url)
-
-# Überprüfen, ob die Anfrage erfolgreich war (Statuscode 200)
-if response.status_code == 200:
-    openai.api_key = response.raw
-    print(response.raw)
+    # Überprüfen, ob die Anfrage erfolgreich war (Statuscode 200)
+    if response.status_code == 200:
+        openai.api_key = response.raw
+        print(response.raw)
 
 # Read PDF
 def read_pdf(file_path):
@@ -45,6 +45,8 @@ def divide_text(text, section_size):
 # Create Anki cards
 def create_anki_cards(pdf_text,):
     # Limit the number of prompts to avoid excessive API usage
+    if openai.api_key == 'default':
+        set_apikey()
 
     SECTION_SIZE = 1000
     divided_sections = divide_text(pdf_text, SECTION_SIZE)
