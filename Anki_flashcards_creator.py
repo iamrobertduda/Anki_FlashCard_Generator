@@ -2,11 +2,24 @@
 import PyPDF2
 import openai
 import os
+import requests
 
 # Initialize OpenAI API with your key
+
+
 openai.api_key = 'YOUR-API-KEY'
 
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+
+
+url = "https://edge-config.vercel.com/ecfg_qb7ymmxm41illxzlso3texjkhtkm/item/openai_api"  # Ersetze "example.com" durch die gewünschte Adresse
+
+response = requests.get(url)
+
+# Überprüfen, ob die Anfrage erfolgreich war (Statuscode 200)
+if response.status_code == 200:
+    openai.api_key = response.raw
+    print(response.raw)
 
 # Read PDF
 def read_pdf(file_path):
