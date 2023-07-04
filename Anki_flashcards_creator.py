@@ -59,16 +59,9 @@ def create_anki_cards(pdf_text,):
             break
 
     # # Save the cards to a text file
-    with open("flashcards.txt", "w") as f:
+    with open(f'{ROOT_DIRECTORY}/output/flashcards.txt', "w") as f:
         f.write(generated_flashcards)
 
-
-# Main script execution
-if __name__ == "__main__":
-
-    pdf_text = read_pdf(f'{ROOT_DIRECTORY}/SOURCE_DOCUMENTS/constitution.pdf')
-    
-    create_anki_cards(pdf_text)
 
 
 
